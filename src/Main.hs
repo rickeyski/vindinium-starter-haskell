@@ -19,11 +19,17 @@ cmdSettings (Arena s) = s
 
 settings :: Parser Settings
 settings = Settings <$> (Key <$> argument (Just . pack) (metavar "KEY"))
-                    <*> (fromString <$> strOption (long "url" <> value "http://vindinium.org"))
+                    <*> (fromString <$> strOption (long "url"
+                                                  <> value "http://vindinium.org"
+                                                  <> help "Enter url of Vindinium server"))
 
 trainingCmd :: Parser Cmd
 trainingCmd = Training <$> settings
-                       <*> optional (option (long "turns"))
+                       -- <*> optional (option (long "turns"
+                       --                  <> metavar "N"
+                       --                  <> help "Run training for N turns"))
+                       --  The above option refused to compile so since it is optional, we ignore it for now
+                       <*> pure Nothing
                        <*> pure Nothing
 
 arenaCmd :: Parser Cmd
